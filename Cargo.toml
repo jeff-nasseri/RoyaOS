@@ -1,0 +1,34 @@
+[package]
+name = "royaos"
+version = "0.1.0"
+edition = "2021"
+authors = ["RoyaOS Team"]
+description = "An operating system for Roya AGI"
+license = "BSD-3-Clause"
+repository = "https://github.com/your-username/royaos"
+
+[dependencies]
+tokio = { version = "1.36.0", features = ["full"] }
+serde = { version = "1.0.197", features = ["derive"] }
+serde_yaml = "0.9.32"
+log = "0.4.21"
+env_logger = "0.11.2"
+thiserror = "1.0.57"
+async-trait = "0.1.77"
+uuid = { version = "1.7.0", features = ["v4"] }
+chrono = "0.4.35"
+clap = { version = "4.5.2", features = ["derive"] }
+
+[workspace]
+members = [
+    "crates/kernel",
+    "crates/memory",
+    "crates/tools",
+    "crates/security",
+    "crates/interface",
+]
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
