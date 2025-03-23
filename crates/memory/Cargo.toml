@@ -1,0 +1,12 @@
+[package]
+name = "royaos-memory"
+version = "0.1.0"
+edition = "2021"
+authors = ["RoyaOS Team"]
+description = "Memory management module for RoyaOS"
+license = "BSD-3-Clause"
+
+[dependencies]
+log = "0.4.21"
+thiserror = "1.0.57"
+uuid = { version = "1.7.0", features = ["v4"] }
