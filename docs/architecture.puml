@@ -1,0 +1,60 @@
+@startuml RoyaOS Architecture
+
+skinparam backgroundColor white
+skinparam componentStyle rectangle
+
+package "RoyaOS" {
+  [Kernel] as kernel
+  [Memory Manager] as memory
+  [Tool Manager] as tools
+  [Security Module] as security
+  [Interface Layer] as interface
+  
+  database "Storage" as storage
+  
+  kernel --> memory : manages
+  kernel --> tools : coordinates
+  kernel --> security : enforces
+  kernel --> storage : accesses
+  interface --> kernel : communicates
+}
+
+cloud "External Tools" as externalTools
+tools --> externalTools : integrates
+
+package "Roya AGI" {
+  [Cognitive Engine] as cognitive
+  [Learning Module] as learning
+  [Decision System] as decision
+  
+  cognitive --> learning : trains
+  cognitive --> decision : informs
+}
+
+Roya AGI --> interface : interacts with
+
+note right of kernel
+  Core component handling:
+  - Process scheduling
+  - Resource allocation
+  - System calls
+  - Inter-process communication
+end note
+
+note right of memory
+  Manages:
+  - Short-term memory
+  - Long-term memory
+  - Working memory
+  - Memory optimization
+end note
+
+note right of tools
+  Provides:
+  - Tool discovery
+  - Tool integration
+  - API management
+  - Tool execution
+end note
+
+@enduml

@@ -1,0 +1,25 @@
+# RoyaOS Configuration Example
+
+system:
+  name: "RoyaOS"
+  version: "0.1.0"
+  log_level: "info"
+  data_dir: "./data"
+
+memory:
+  max_allocation: 4096  # Maximum memory allocation in MB
+  optimization_strategy: "aggressive"
+
+tools:
+  discovery_enabled: true
+  tool_dirs:
+    - "./tools"
+    - "/usr/local/lib/royaos/tools"
+
+security:
+  security_level: "standard"
+  allowed_operations:
+    - "file_read"
+    - "file_write"
+    - "network_access"
+    - "tool_execution"
