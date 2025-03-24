@@ -141,12 +141,37 @@ impl Kernel {
     pub fn process_syscall(&self, syscall: &str, args: &[&str]) -> Result<String, String> {
         debug!("Processing syscall: {} with args: {:?}", syscall, args);
         
+        // Validate kernel state
+        if !self.running {
+            return Err("Kernel is not running".to_string());
+        }
+        
         // Route syscall to appropriate subsystem
         match syscall {
-            "memory_alloc" => self.handle_memory_syscall("alloc", args),
-            "memory_free" => self.handle_memory_syscall("free", args),
-            "tool_execute" => self.handle_tool_syscall("execute", args),
-            "security_check" => self.handle_security_syscall("check", args),
+            "memory_alloc" => {
+                if args.len() < 1 {
+                    return Err("memory_alloc requires at least 1 argument".to_string());
+                }
+                self.handle_memory_syscall("alloc", args)
+            },
+            "memory_free" => {
+                if args.len() < 1 {
+                    return Err("memory_free requires at least 1 argument".to_string());
+                }
+                self.handle_memory_syscall("free", args)
+            },
+            "tool_execute" => {
+                if args.len() < 2 {
+                    return Err("tool_execute requires at least 2 arguments".to_string());
+                }
+                self.handle_tool_syscall("execute", args)
+            },
+            "security_check" => {
+                if args.len() < 3 {
+                    return Err("security_check requires 3 arguments".to_string());
+                }
+                self.handle_security_syscall("check", args)
+            },
             _ => Err(format!("Unknown syscall: {}", syscall))
         }
     }
@@ -231,20 +256,4 @@ impl Kernel {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    
-    #[test]
-    fn test_kernel_initialization() {
-        let mut kernel = Kernel::new("0.1.0");
-        assert_eq!(kernel.is_running(), false);
-        
-        let result = kernel.initialize();
-        assert!(result.is_ok());
-        assert_eq!(kernel.is_running(), true);
-        
-        let result = kernel.shutdown();
-        assert!(result.is_ok());
-        assert_eq!(kernel.is_running(), false);
-    }
-}
+mod tests;
